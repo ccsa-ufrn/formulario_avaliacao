@@ -927,20 +927,23 @@ class Application extends React.Component {
 
     submit() {
         const data = JSON.stringify(this.state);
+        console.log(data);
         const config = {
+            mode: 'cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify(this.state)
+            body: data
         };
         fetch('send.php', config)
             .then(function(res) {
+                console.log(res);
                 return res.json();
             })
             .then(function(json){
-                console.log(json.ok);
+                console.log(json);
             })
             .catch(function(e) {
                 console.error(e);
