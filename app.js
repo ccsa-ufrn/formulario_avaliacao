@@ -698,6 +698,26 @@ class CriterioSete extends React.Component {
     }
 }
 
+class Success extends React.Component {
+    render() {
+        return(
+            <div>
+                <h4>Avaliação submetida com sucesso!</h4>
+            </div>
+        );
+    }
+}
+
+class Fail extends React.Component {
+    render() {
+        return(
+            <div>
+                <h4>Erro ao submeter avaliação!</h4>
+            </div>
+        );
+    }
+}
+
 class Application extends React.Component {
     constructor(props) {
         super(props);
@@ -925,9 +945,12 @@ class Application extends React.Component {
         });
     }
 
+    setStep(stp) {
+        this.setState({curr_step:stp});
+    }
+
     submit() {
         const data = JSON.stringify(this.state);
-        console.log(data);
         const config = {
             mode: 'cors',
             headers: {
@@ -937,13 +960,17 @@ class Application extends React.Component {
             method: 'POST',
             body: data
         };
+        var self = this;
         fetch('send.php', config)
             .then(function(res) {
-                console.log(res);
                 return res.json();
             })
             .then(function(json){
-                console.log(json);
+                if (json.success) {
+                    self.setState({curr_step: 4});
+                } else {
+                    self.setState({curr_step: 5});
+                }
             })
             .catch(function(e) {
                 console.error(e);
@@ -958,6 +985,10 @@ class Application extends React.Component {
                 return <CadastroProfessores nextStep={this.nextStep} previousStep={this.previousStep} addProfessor={this.addProfessor} removeProfessor={this.removeProfessor} professors={this.state.professors}/>
             case 3:
                 return <Avaliacao previousStep={this.previousStep} professors={this.state.professors} changeProfessorFieldNumber={this.changeProfessorFieldNumber} changeInsertion={this.changeInsertion} submit={this.submit}/>
+            case 4:
+                return <Success/>
+            case 5:
+                return <Fail/>
         }
     }
 }
