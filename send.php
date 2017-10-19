@@ -15,8 +15,12 @@ $content = json_decode($content);
 
 $group_name = $content->group_name;
 $coordinator = $content->coordinator;
+$year = $content->year;
+$numGrad = $content->numGrad;
+$numPosGrad = $content->numPosGrad;
+$goals = $content->goals;
 
-$queryNewBase = "INSERT INTO `search_group` (`id`, `name`, `coordinator`) VALUES(NULL, '$group_name', '$coordinator');";
+$queryNewBase = "INSERT INTO `search_group` (`id`, `name`, `coordinator`, `year`, `numGrad`, `numPosGrad`, `goals`) VALUES(NULL, '$group_name', '$coordinator', $year, $numGrad, $numPosGrad, '$goals' );";
 $saveGroup = $con->query($queryNewBase);
 $base_id = $con->insert_id;
 // Save the base infos and store ID

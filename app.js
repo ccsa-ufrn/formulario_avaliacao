@@ -8,18 +8,40 @@ class DadosBase extends React.Component {
                 <p>Por favor, preencha abaixo os dados relacionados à base de pesquisa avaliada</p>
 
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-8">
                         <div className="form-group">
-                            <label htmlFor="nomeBase">Nome da base</label>
-                            <input type="text" className="form-control" id="nomeBase" placeholder="Nome da base de pesquisa" onChange={this.props.changeName} />
+                            <label htmlFor="nomeBase">Nome da base <span className="red-text">*</span></label>
+                            <input type="text" className="form-control" id="nomeBase" placeholder="Nome da base de pesquisa" defaultValue={this.props.currentState.group_name} onChange={this.props.changeName} />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="nomeBase">Coordenador(a)</label>
-                            <input type="text" className="form-control" id="nomeBase" placeholder="Coordenador(a) da base de pesquisa" onChange={this.props.changeCoordinator} />
+                            <label htmlFor="nomeBase">Coordenador(a) <span className="red-text">*</span></label>
+                            <input type="text" className="form-control" id="nomeBase" placeholder="Coordenador(a) da base de pesquisa" defaultValue={this.props.currentState.coordinator} onChange={this.props.changeCoordinator} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="anoAtividades">Ano de referência <span className="red-text">*</span> <i>(ano em que as atividades cadastradas ocorreram)</i></label>
+                            <input type="number" className="form-control" id="nomeBase" defaultValue={this.props.currentState.year} onChange={this.props.changeYear} />
+                        </div>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="alunosGraduacao">Quantidade de alunos de graduação <span className="red-text">*</span></label>
+                                    <input type="number" className="form-control" id="alunosGraduacao" defaultValue={this.props.currentState.numGrad} onChange={this.props.changeGrad} />
+                                </div>
+                            </div>
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="alunosPosGraduacao">Quantidade de alunos de pós-graduação <span className="red-text">*</span></label>
+                                    <input type="number" className="form-control" id="alunosPosGraduacao" defaultValue={this.props.currentState.numPosGrad} onChange={this.props.changePosGrad}/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="atividadesFuturas">Atividades futuras <span className="red-text">*</span> <i>(atividades que a base planejam desenvolver futuramente)</i></label>
+                            <textarea className="form-control" onChange={this.props.changeGoals} defaultValue={this.props.currentState.goals}></textarea>
                         </div>
                         <button className="btn btn-primary" onClick={this.props.nextStep} >Próximo passo</button>
                     </div>
-                </div>
+                </div><br/><br/><br/>
             </div>
         );
     }
@@ -107,7 +129,7 @@ class Avaliacao extends React.Component {
         return(
             <div>
                 <h4>Passo 3 de 3 <small className="text-muted">Critérios de avaliação</small></h4>
-                <p>Por favor, preencha corretamente as tabelas abaixo relativas aos 7 critérios de avaliação da base de pesquisa. Note que para cada atividade relatada aparecerá abaixo da tabela um campo para descrição detalhada da atividade</p>
+                <p>Por favor, preencha corretamente as tabelas abaixo relativas aos 7 critérios de avaliação da base de pesquisa. Os critérios referem-se aos professores, apenas. Note que para cada atividade relatada aparecerá abaixo da tabela um campo para descrição detalhada da atividade</p>
                 <button className="btn" onClick={this.props.previousStep} >Passo anterior</button><br/><br/>
                 <CriterioUm professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
                 <CriterioDois professors={this.props.professors} changeProfessorFieldNumber={this.props.changeProfessorFieldNumber} changeInsertion={this.props.changeInsertion}/><hr/>
@@ -725,12 +747,20 @@ class Application extends React.Component {
             curr_step: 1,
             group_name: '',
             coordinator: '',
+            year: 0,
+            numGrad: 0,
+            numPosGrad: 0,
+            goals: '',
             id_counter: 0,
             professors: []
         };
 
         this.changeName = this.changeName.bind(this);
         this.changeCoordinator = this.changeCoordinator.bind(this);
+        this.changeYear = this.changeYear.bind(this);
+        this.changeGrad = this.changeGrad.bind(this);
+        this.changePosGrad = this.changePosGrad.bind(this);
+        this.changeGoals = this.changeGoals.bind(this);
         this.nextStep = this.nextStep.bind(this);
         this.previousStep = this.previousStep.bind(this);
         this.addProfessor = this.addProfessor.bind(this);
@@ -741,12 +771,27 @@ class Application extends React.Component {
     }
 
     changeName(event) {
-        console.log(event);
         this.setState({ group_name: event.nativeEvent.target.value });
     }
 
     changeCoordinator(event) {
         this.setState({ coordinator: event.nativeEvent.target.value });
+    }
+
+    changeYear(event) {
+        this.setState({ year: event.nativeEvent.target.value });
+    }
+    
+    changeGrad(event) {
+        this.setState({ numGrad: event.nativeEvent.target.value });
+    }
+    
+    changePosGrad(event) {
+        this.setState({ numPosGrad: event.nativeEvent.target.value });
+    }
+    
+    changeGoals(event) {
+        this.setState({ goals: event.nativeEvent.target.value });
     }
 
     nextStep() {
@@ -980,11 +1025,26 @@ class Application extends React.Component {
     render() {
         switch(this.state.curr_step) {
             case 1:
-                return <DadosBase changeName={this.changeName} changeCoordinator={this.changeCoordinator} nextStep={this.nextStep} />
+                return <DadosBase currentState={this.state} 
+                                  changeName={this.changeName} 
+                                  changeCoordinator={this.changeCoordinator} 
+                                  changeYear={this.changeYear} 
+                                  changeGrad={this.changeGrad} 
+                                  changePosGrad={this.changePosGrad} 
+                                  changeGoals={this.changeGoals}
+                                  nextStep={this.nextStep} />
             case 2:
-                return <CadastroProfessores nextStep={this.nextStep} previousStep={this.previousStep} addProfessor={this.addProfessor} removeProfessor={this.removeProfessor} professors={this.state.professors}/>
+                return <CadastroProfessores nextStep={this.nextStep} 
+                                            previousStep={this.previousStep} 
+                                            addProfessor={this.addProfessor} 
+                                            removeProfessor={this.removeProfessor} 
+                                            professors={this.state.professors} />
             case 3:
-                return <Avaliacao previousStep={this.previousStep} professors={this.state.professors} changeProfessorFieldNumber={this.changeProfessorFieldNumber} changeInsertion={this.changeInsertion} submit={this.submit}/>
+                return <Avaliacao previousStep={this.previousStep} 
+                                  professors={this.state.professors} 
+                                  changeProfessorFieldNumber={this.changeProfessorFieldNumber} 
+                                  changeInsertion={this.changeInsertion} 
+                                  submit={this.submit}/>
             case 4:
                 return <Success/>
             case 5:

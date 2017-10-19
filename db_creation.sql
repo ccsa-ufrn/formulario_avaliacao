@@ -11,6 +11,10 @@ CREATE TABLE IF NOT EXISTS `search_group` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(65) NOT NULL,
   `coordinator` VARCHAR(65) NOT NULL,
+  `year` INT NOT NULL,
+  `numGrad` INT NOT NULL,
+  `numPosGrad` INT NOT NULL,
+  `goals` MEDIUMTEXT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
