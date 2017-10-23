@@ -36,7 +36,7 @@ class DadosBase extends React.Component {
                             </div>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="atividadesFuturas">Atividades futuras <span className="red-text">*</span> <i>(atividades que a base planejam desenvolver futuramente)</i></label>
+                            <label htmlFor="atividadesFuturas">Atividades futuras <span className="red-text">*</span> <i>(atividades que a base planeja desenvolver futuramente)</i></label>
                             <textarea className="form-control" onChange={this.props.changeGoals} defaultValue={this.props.currentState.goals}></textarea>
                         </div>
                         <button className="btn btn-primary" onClick={this.props.nextStep} >Próximo passo</button>
