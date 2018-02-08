@@ -26,8 +26,18 @@ $base_id = $con->insert_id;
 // Save the base infos and store ID
 foreach($content->professors as $prof) {
     $prof_name = $prof->name;
-    
-    $queryNewProf = "INSERT INTO `professor` (`id`, `search_group_id`, `name`) VALUES(NULL, $base_id, '$prof_name');";
+    if($prof->ccsa == true){
+        $ccsa = 1;
+    } else {
+        $ccsa = 0;
+    }
+    if($prof->master_phd == true){
+        $master_phd = 1;
+    } else {
+        $master_phd = 0;
+    }
+
+    $queryNewProf = "INSERT INTO `professor` (`id`, `search_group_id`, `name`, `ccsa`, `master_phd`) VALUES(NULL, $base_id, '$prof_name', $ccsa, $master_phd );";
     $saveProfessor = $con->query($queryNewProf);
     $prof_id = $con->insert_id;
     
@@ -46,7 +56,7 @@ foreach($content->professors as $prof) {
     }
 }
 
-echo json_encode(array('success' => true));
+echo json_encode(array('success'=>true));
 
 $con->close();
 ?>

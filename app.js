@@ -51,23 +51,56 @@ class CadastroProfessores extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            curr_professor: ''
+            curr_professor: {
+                name: '',
+                ccsa: 0,
+                master_phd: 0 
+            }
         }
 
-        this.changeProfessor = this.changeProfessor.bind(this);
+        this.changeProfessorName = this.changeProfessorName.bind(this);
+        this.changeProfessorCCSA = this.changeProfessorCCSA.bind(this);
+        this.changeProfessorMasterPHD = this.changeProfessorMasterPHD.bind(this);
         this.sendProfessor = this.sendProfessor.bind(this);
     }
 
-    changeProfessor(event) {
-        this.setState({
-            curr_professor: event.nativeEvent.target.value
+    changeProfessorName(event) {
+        this.setState({curr_professor : {
+               name : event.nativeEvent.target.value,
+               ccsa: this.state.curr_professor.ccsa,
+               master_phd: this.state.curr_professor.master_phd
+            }
         });
     }
 
+    changeProfessorCCSA(event) {
+        this.setState({curr_professor : {
+               name : this.state.curr_professor.name,
+               ccsa: !(this.state.curr_professor.ccsa),
+               master_phd: this.state.curr_professor.master_phd
+            }
+        });
+    }
+
+    changeProfessorMasterPHD(event) {
+        this.setState({curr_professor : {
+               name : this.state.curr_professor.name,
+               ccsa: this.state.curr_professor.ccsa,
+               master_phd: !(this.state.curr_professor.master_phd),
+            }
+        });
+    }
     sendProfessor(event) {
-        this.props.addProfessor(this.state.curr_professor);
+        this.props.addProfessor(this.state.curr_professor.name, this.state.curr_professor.ccsa, this.state.curr_professor.master_phd);
         document.getElementById('nomeDoProfessor').value = '';
-        this.setState({curr_professor: ''});
+        document.getElementById('professorCCSA').checked = false;
+        document.getElementById('professorQualificacao').checked = false;
+        this.setState({curr_professor: {
+                name: '',
+                ccsa: 0,
+                master_phd: 0, 
+            }
+        });
     }
 
     render() {
@@ -80,7 +113,18 @@ class CadastroProfessores extends React.Component {
                     <div className="col-md-7">
                         <div className="row">
                             <div className="col-8">
-                                <input type="text" id="nomeDoProfessor" className="form-control" onChange={this.changeProfessor} placeholder="Nome do professor"/>
+                                <input type="text" id="nomeDoProfessor" className="form-control" onChange={this.changeProfessorName} placeholder="Nome do professor"/>
+                                <div className="form-check">
+                                <br></br>
+                                <p>O professor faz parte do CCSA</p>
+                                <input type="checkbox" name="ccsa" value="1" id="professorCCSA" onChange={this.changeProfessorCCSA}/>
+                                <label className="form-check-label" htmlFor="professorCCSA">Sim</label>
+                                </div>
+                                <div className="form-check">
+                                <p>O professor possui titúlo de mestre ou doutor?</p>
+                                <input type="checkbox" name="master_phd" value="1" id="professorQualificacao" onChange={this.changeProfessorMasterPHD}/>
+                                <label className="form-check-label" htmlFor="professorQualificacao">Sim</label>
+                                </div>
                             </div>
                             <div className="col-4">
                                 <button className="btn" onClick={this.sendProfessor} >Adicionar professor</button>
@@ -802,12 +846,14 @@ class Application extends React.Component {
         this.setState(function (prevState, props) { return {curr_step: prevState.curr_step - 1} });
     }
 
-    addProfessor(name) {
+    addProfessor(name, ccsa, master_phd) {
         this.setState(function(prevState, props) {
             var newProfs = prevState.professors;
             newProfs.push({
                 name: name, 
                 id: prevState.id_counter,
+                ccsa: ccsa,
+                master_phd: master_phd,
                 // {type: '', description: ''}
                 criterions: [
                     [ // Criterio 1

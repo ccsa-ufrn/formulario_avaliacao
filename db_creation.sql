@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS `professor` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `search_group_id` INT NOT NULL,
   `name` VARCHAR(45) NULL,
+  `ccsa` TINYINT(1) NOT NULL,
+  `master_phd` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`, `search_group_id`),
   INDEX `fk_professor_search_group_idx` (`search_group_id` ASC),
   CONSTRAINT `fk_professor_search_group`
