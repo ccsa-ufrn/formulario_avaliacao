@@ -24,13 +24,16 @@ class DadosBase extends React.Component {
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="form-group">
-                                    <label htmlFor="alunosGraduacao">Quantidade de alunos de graduação <span className="red-text">*</span></label>
+                                    <label htmlFor="alunosGraduacao">Número de alunos de graduação vinculados ao projeto de pesquisa (alunos bolsistas ou não desde que devidamente comprovados)<span className="red-text">*</span></label>
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
                                     <input type="number" className="form-control" id="alunosGraduacao" defaultValue={this.props.currentState.numGrad} onChange={this.props.changeGrad} />
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group">
-                                    <label htmlFor="alunosPosGraduacao">Quantidade de alunos de pós-graduação <span className="red-text">*</span></label>
+                                    <label htmlFor="alunosPosGraduacao">Número de alunos de pós-graduação vinculados ao projeto de pesquisa (não podem ser contabilizados os projetos de dissertações e teses dos alunos, pois estes são projetos dos alunos). <span className="red-text">*</span></label>
                                     <input type="number" className="form-control" id="alunosPosGraduacao" defaultValue={this.props.currentState.numPosGrad} onChange={this.props.changePosGrad}/>
                                 </div>
                             </div>
@@ -54,7 +57,7 @@ class CadastroProfessores extends React.Component {
             curr_professor: {
                 name: '',
                 ccsa: 0,
-                master_phd: 0 
+                master_phd: 0
             }
         }
 
@@ -98,7 +101,7 @@ class CadastroProfessores extends React.Component {
         this.setState({curr_professor: {
                 name: '',
                 ccsa: 0,
-                master_phd: 0, 
+                master_phd: 0,
             }
         });
     }
@@ -116,7 +119,7 @@ class CadastroProfessores extends React.Component {
                                 <input type="text" id="nomeDoProfessor" className="form-control" onChange={this.changeProfessorName} placeholder="Nome do professor"/>
                                 <div className="form-check">
                                 <br></br>
-                                <p>O professor faz parte do CCSA</p>
+                                <p>O professor faz parte do CCSA?</p>
                                 <input type="checkbox" name="ccsa" value="1" id="professorCCSA" onChange={this.changeProfessorCCSA}/>
                                 <label className="form-check-label" htmlFor="professorCCSA">Sim</label>
                                 </div>
@@ -208,7 +211,7 @@ class CriterioUm extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 1.</b> Produção científica dos professores do Grupo de Pesquisa em eventos locais, regionais, nacionais e internacionais ( número de participações em eventos ) Fonte: Lattes
+                        <b>Critério 1.</b> Produção científica dos professores do Grupo de Pesquisa nos últimos quatro anos em eventos locais, regionais, nacionais e internacionais (número de participações em eventos com trabalhos completos em anais de congressos) Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -261,13 +264,13 @@ class CriterioUm extends React.Component {
                                             }
                                         </div>
                                     )
-                                }, this)  
+                                }, this)
                             }
                             </div>
                         </div>);
                     }, this)
                 }
-                
+
             </div>
         );
     }
@@ -293,7 +296,7 @@ class CriterioDois extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 2.</b> Produção científica definitiva dos professores do Grupo de Pesquisa em periódicos (número de publicações) Fonte: Lattes
+                        <b>Critério 2.</b> Produção científica definitiva dos professores do Grupo de Pesquisa no último quadriênio (número de publicações em artigos, livros, capítulos de livros). Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -346,7 +349,7 @@ class CriterioDois extends React.Component {
                                             }
                                         </div>
                                     )
-                                }, this)  
+                                }, this)
                             }
                             </div>
                         </div>);
@@ -377,7 +380,7 @@ class CriterioTres extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 3.</b> Número de projetos de pesquisa financiados por agências externas. Fonte: Lattes
+                        <b>Critério 3.</b> Número de projetos de pesquisa financiados por agências externas à UFRN no último quadriênio. Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -421,7 +424,7 @@ class CriterioTres extends React.Component {
                                             }
                                         </div>
                                     )
-                                }, this)  
+                                }, this)
                             }
                             </div>
                         </div>);
@@ -452,7 +455,7 @@ class CriterioQuatro extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 4.</b> Número de projetos de pesquisa desenvolvidos internamente pelos participantes do Grupo de Pesquisa, com ou sem financiamento. Fonte:Lattes
+                        <b>Critério 4.</b> Número de projetos de pesquisa desenvolvidos internamente pelos participantes do Grupo de Pesquisa, com ou sem financiamento, nos últimos quatro anos, cadastrados no SIGAA. (serão contabilizados o número de projetos por coordenador). Fonte:Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -496,7 +499,7 @@ class CriterioQuatro extends React.Component {
                                             }
                                         </div>
                                     )
-                                }, this)  
+                                }, this)
                             }
                             </div>
                         </div>);
@@ -527,7 +530,7 @@ class CriterioCinco extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 5.</b> Número de professores com bolsas produtividade que participam do Grupo de Pesquisa. Fonte: Lattes
+                        <b>Critério 5.</b> Número de professores com bolsas produtividade que participam do Grupo de Pesquisa nos últimos quatro anos. Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -571,7 +574,7 @@ class CriterioCinco extends React.Component {
                                             }
                                         </div>
                                     )
-                                }, this)  
+                                }, this)
                             }
                             </div>
                         </div>);
@@ -602,7 +605,7 @@ class CriterioSeis extends React.Component {
             <div>
                 <div className="card">
                     <div className="card-body">
-                        <b>Critério 6.</b> Participação do Grupo de Pesquisa no Seminário de Pesquisa do CCSA (número de atividades). Fonte: Lattes
+                        <b>Critério 6.</b> Participação do Grupo de Pesquisa no Seminário de Pesquisa do CCSA nos últimos quatro anos, (número de atividades). Fonte: Lattes
                     </div>
                 </div><br/>
                 <table className="table">
@@ -661,7 +664,7 @@ class CriterioSeis extends React.Component {
                                             }
                                         </div>
                                     )
-                                }, this)  
+                                }, this)
                             }
                             </div>
                         </div>);
@@ -752,7 +755,7 @@ class CriterioSete extends React.Component {
                                             }
                                         </div>
                                     )
-                                }, this)  
+                                }, this)
                             }
                             </div>
                         </div>);
@@ -825,15 +828,15 @@ class Application extends React.Component {
     changeYear(event) {
         this.setState({ year: event.nativeEvent.target.value });
     }
-    
+
     changeGrad(event) {
         this.setState({ numGrad: event.nativeEvent.target.value });
     }
-    
+
     changePosGrad(event) {
         this.setState({ numPosGrad: event.nativeEvent.target.value });
     }
-    
+
     changeGoals(event) {
         this.setState({ goals: event.nativeEvent.target.value });
     }
@@ -850,16 +853,16 @@ class Application extends React.Component {
         this.setState(function(prevState, props) {
             var newProfs = prevState.professors;
             newProfs.push({
-                name: name, 
+                name: name,
                 id: prevState.id_counter,
                 ccsa: ccsa,
                 master_phd: master_phd,
                 // {type: '', description: ''}
                 criterions: [
                     [ // Criterio 1
-                        {type: 'Local', insertions: []}, 
-                        {type: 'Regional', insertions: []}, 
-                        {type: 'Nacional', insertions: []}, 
+                        {type: 'Local', insertions: []},
+                        {type: 'Regional', insertions: []},
+                        {type: 'Nacional', insertions: []},
                         {type: 'Internacional', insertions: []}
                     ],
                     [ // Criterio 2
@@ -868,16 +871,16 @@ class Application extends React.Component {
                         {type: 'Livro', insertions: []},
                         {type: 'Org. Livros', insertions: []},
 
-                    ], 
+                    ],
                     [ // Critério 3
                         {type: 'Projetos', insertions: []},
-                    ], 
+                    ],
                     [ // Criterio 4
                         {type: 'Projetos', insertions: []},
-                    ], 
+                    ],
                     [ // Criteio 5
-                        {type: 'Bolsas', insertions: []},                        
-                    ], 
+                        {type: 'Bolsas', insertions: []},
+                    ],
                     [ // Criterio 6
                         {type: 'Ofic.', insertions: []},
                         {type: 'Conf.', insertions: []},
@@ -885,8 +888,8 @@ class Application extends React.Component {
                         {type: 'Mesas redondas', insertions: []},
                         {type: 'Coord. GT', insertions: []},
                         {type: 'Org. Evento', insertions: []},
-                        {type: 'Exposição', insertions: []},   
-                    ], 
+                        {type: 'Exposição', insertions: []},
+                    ],
                     [ // Criterio 7
                         {type: 'Seminários', insertions: []},
                         {type: 'Encontros', insertions: []},
@@ -954,7 +957,7 @@ class Application extends React.Component {
                     }
 
                     var insertions = insType.insertions;
-                    
+
                     for (var j = 0; j < qnt; j++) {
                         insertions.push('');
                     }
@@ -986,7 +989,7 @@ class Application extends React.Component {
                     }
 
                     var insertions = insType.insertions;
-                    
+
                     for (var j = 0; j < qnt; j++) {
                         insertions.pop();
                     }
@@ -1071,25 +1074,25 @@ class Application extends React.Component {
     render() {
         switch(this.state.curr_step) {
             case 1:
-                return <DadosBase currentState={this.state} 
-                                  changeName={this.changeName} 
-                                  changeCoordinator={this.changeCoordinator} 
-                                  changeYear={this.changeYear} 
-                                  changeGrad={this.changeGrad} 
-                                  changePosGrad={this.changePosGrad} 
+                return <DadosBase currentState={this.state}
+                                  changeName={this.changeName}
+                                  changeCoordinator={this.changeCoordinator}
+                                  changeYear={this.changeYear}
+                                  changeGrad={this.changeGrad}
+                                  changePosGrad={this.changePosGrad}
                                   changeGoals={this.changeGoals}
                                   nextStep={this.nextStep} />
             case 2:
-                return <CadastroProfessores nextStep={this.nextStep} 
-                                            previousStep={this.previousStep} 
-                                            addProfessor={this.addProfessor} 
-                                            removeProfessor={this.removeProfessor} 
+                return <CadastroProfessores nextStep={this.nextStep}
+                                            previousStep={this.previousStep}
+                                            addProfessor={this.addProfessor}
+                                            removeProfessor={this.removeProfessor}
                                             professors={this.state.professors} />
             case 3:
-                return <Avaliacao previousStep={this.previousStep} 
-                                  professors={this.state.professors} 
-                                  changeProfessorFieldNumber={this.changeProfessorFieldNumber} 
-                                  changeInsertion={this.changeInsertion} 
+                return <Avaliacao previousStep={this.previousStep}
+                                  professors={this.state.professors}
+                                  changeProfessorFieldNumber={this.changeProfessorFieldNumber}
+                                  changeInsertion={this.changeInsertion}
                                   submit={this.submit}/>
             case 4:
                 return <Success/>
