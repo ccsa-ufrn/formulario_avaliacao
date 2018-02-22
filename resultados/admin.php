@@ -47,43 +47,51 @@ while($group = mysqli_fetch_array($groups_result)){
     $temp_group = array();
     $points_for_rooms = $group['numGrad'] * 4 + $group['numPosGrad'] * 4;
     $points_every_four_years = 0;
-    $temp_group = array("id" => $group["id"], "name" => $group['name'], "coordinator" => $group['coordinator'], "year" => $group['year'], "numGrad" => $group['numGrad'], "numPosGrad" => $group['numPosGrad'], "goals" => $group['goals'], "pointsRooms" => $points_for_rooms, "pointsFourYears" => $points_every_four_years);
+    $temp_group = array("id" => $group["id"], "name" => $group['name'], "coordinator" => $group['coordinator'], "year" => $group['year'], "numGrad" => $group['numGrad'], "numPosGrad" => $group['numPosGrad'], "goals" => $group['goals'], "pointsRooms" => $points_for_rooms, "pointsFourYears" => $points_every_four_years, $pointsEachInsertion => Array("3" => 0, "4" => 0, "5" => 0, "6" => 0, "7" => 0, "8" => 0, "9" => 0, "10" => 0));
     foreach($professors as $professor){
         if($professor['search_group_id'] == $temp_group['id'] && $professor['ccsa'] == 1){
             $prof_points_rooms = 0;
             $prof_points_four_years = 0;
             if($professor['master_phd'] == 1){
                 $prof_points_rooms += 4;
+                $temp_group[$pointsEachInsertion]["3"] += 4;
             }
             foreach($insertions as $insertion){
                 if($insertion['professor_id'] == $professor['id']){
                     if($insertion['criterion'] == 0){
                         $prof_points_rooms += 3;
                         $prof_points_four_years += 3;
+                        $temp_group[$pointsEachInsertion]["4"] += 3;
                     }
                     if($insertion['criterion'] == 1){
                         $prof_points_rooms += 5;
                         $prof_points_four_years += 5;
+                        $temp_group[$pointsEachInsertion]["5"] += 5;
                     }
                     if($insertion['criterion'] == 2){
                         $prof_points_rooms += 4;
                         $prof_points_four_years += 4;
+                        $temp_group[$pointsEachInsertion]["6"] += 4;
                     }
                     if($insertion['criterion'] == 3){
                         $prof_points_rooms += 3;
                         $prof_points_four_years += 3;
+                        $temp_group[$pointsEachInsertion]["7"] += 3;
                     }
                     if($insertion['criterion'] == 4){
                         $prof_points_rooms += 4;
                         $prof_points_four_years += 4;
+                        $temp_group[$pointsEachInsertion]["8"] += 4;
                     }
                     if($insertion['criterion'] == 5){
                         $prof_points_rooms += 5;
                         $prof_points_four_years += 5;
+                        $temp_group[$pointsEachInsertion]["9"] += 5;
                     }
                     if($insertion['criterion'] == 6){
                         $prof_points_rooms += 3;
                         $prof_points_four_years += 3;
+                        $temp_group[$pointsEachInsertion]["10"] += 3;
                     }
                 }
             }
@@ -137,6 +145,11 @@ function array_icount_values($array) {
      <meta name="viewport" content="width=device-width, initial-scale=1">
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
    </head>
+   <style>
+    tr.collapse.in {
+        display:table-row; !important
+    }
+   </style>
 <body>
   <nav class="navbar navbar-light bg-light">
         <div class="container">
@@ -159,12 +172,28 @@ function array_icount_values($array) {
 					<th>Coordenador</th>
 					<th>Pontos anuais</th>
 					<th>Pontos quadrineais</th>
+					<th>Ano em questão</th>
 				</thead>
 				<?php foreach($groups_this_year as $group): ?>
+                                <tr data-toggle="collapse" data-target=".<?= $group['id'] ?>">
 					<td><?= $group['name'] ?></td>
 					<td><?= $group['coordinator'] ?></td>
 					<td><?= $group['pointsRooms'] ?></td>
-					<td><?= $group['pointsFourYears'] ?></td>
+                                        <td><?= $group['pointsFourYears'] ?></td>
+                                        <td><?= $group['year'] ?></td>
+                                    </tr>
+                                    <tr class="collapse <?= $group['id'] ?>">
+                                        <td>Critério 1 : <?= $group['numGrad'] * 4 ?></br>
+                                        Critério 2 : <?= $group['numPosGrad'] * 4 ?></td>
+                                        <td>Critério 3 : <?= $group[$pointsEachInsertion]["3"]?></br>
+                                        Critério 4 : <?= $group[$pointsEachInsertion]["4"]?></td>
+                                        <td>Critério 5 : <?= $group[$pointsEachInsertion]["5"]?></br>
+                                        Critério 6 : <?= $group[$pointsEachInsertion]["6"]?></td>
+                                        <td>Critério 7 : <?= $group[$pointsEachInsertion]["7"]?></br>
+                                        Critério 8 : <?= $group[$pointsEachInsertion]["8"]?></td>
+                                        <td>Critério 9 : <?= $group[$pointsEachInsertion]["9"]?></br>
+                                        Critério 10 : <?= $group[$pointsEachInsertion]["10"]?></td>
+                                    </tr>
 				<?php endforeach; ?>
 			</table>
 		</div>
@@ -172,6 +201,7 @@ function array_icount_values($array) {
         </div>
      </div>
   </div>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 </body>
 </html>
